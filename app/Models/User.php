@@ -2,15 +2,28 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject; // Import the JWTSubject interface
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users'; // Explicitly define table name if different
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id'; // If you're using user_id as PK
 
     /**
      * The attributes that are mass assignable.
@@ -19,10 +32,16 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
-        'email_address',
+        'email',
         'password',
+        'img',
+        'role'
     ];
 
+    public function classes()
+    {
+        return $this->belongsToMany(ClassMate::class, 'student_in_class', 'user_id', 'class_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -50,7 +69,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTIdentifier()
     {
-        return $this->getKey();
+        return $this->getKey(); //
     }
 
     /**
@@ -60,6 +79,12 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'id' => $this->getKey(),    // Include user id in the token
+            'role' => $this->role, // Include user role in the token
+            'name' => $this->name, // Include user name in the token
+            'email' => $this->email // Include email in the token
+        ];
     }
+
 }
