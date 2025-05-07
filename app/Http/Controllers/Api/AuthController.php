@@ -29,6 +29,7 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
+            'role' => 'required|string|in:admin,teacher,student',
         ]);
 //        dd($validator);
 
