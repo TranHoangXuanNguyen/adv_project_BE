@@ -13,10 +13,16 @@ class StudentController  extends Controller
         $this->userRepository = $userRepository;
     }
     public function store(Request $request){
-        $validated=  $request->validate([
-            'email' => 'required|email|unique:users,email'
-        ]);
-        $student =$this->userRepository-> createStudent($validated);
+    $validated = $request->validate([
+        'email' => 'required|email|unique:users,email',
+    ]);
+
+    $validated['name'] = 'No Name';
+    $validated['password'] ='12345678';
+
+    // Tạo người dùng mới
+    $student = $this->userRepository->create($validated);
+
         return response()->json($student);
     }
 }
