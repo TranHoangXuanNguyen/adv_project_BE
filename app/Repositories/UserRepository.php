@@ -41,4 +41,13 @@ class UserRepository implements UserRepositoryInterface
         $record = $this->model->findOrFail($id);
         $record->delete();
     }
+    public function  createStudent(array $data){
+        return User::create([
+            'name' => $data['name'] ?? 'No Name',
+            'email' => $data['email'],
+            'password' => bcrypt('12345678'), 
+            'role_id' => 2,
+            'class_id' => 1,
+        ]);
+    }
 }
