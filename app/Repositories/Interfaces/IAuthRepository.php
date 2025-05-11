@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Repositories\Interfaces;
 
-interface IUserRepository
+interface IAuthRepository
 {
     public function getAll();
     public function getById($id);
