@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquent;
 
-use App\Contracts\UserRepositoryInterface;
 use App\Models\User;
+use App\Repositories\Interfaces\IUserRepository;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository implements IUserRepository
 {
     protected $model;
 
