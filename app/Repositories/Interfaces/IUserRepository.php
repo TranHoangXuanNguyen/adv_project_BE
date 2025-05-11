@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Repositories\Interfaces;
 
-interface UserRepositoryInterface
+interface IUserRepository
 {
     public function getAll();
     public function getById($id);
