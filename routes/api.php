@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -29,4 +29,4 @@ Route::get('/protected', function () {
     return response()->json(['message' => 'This route is protected by JWT!']);
 })->middleware('auth:api');
 
-Route::post('/student',[StudentController::class,'store']);
+Route::post('/users',[UserController::class,'store']);

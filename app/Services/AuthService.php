@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\Interfaces\IUserRepository;
+use App\Repositories\Interfaces\IAuthRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -11,7 +11,7 @@ class AuthService
 {
     protected $userRepository;
 
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(IAuthRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
