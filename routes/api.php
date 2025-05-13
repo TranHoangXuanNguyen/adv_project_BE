@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\Api\ClassMateController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,3 +32,5 @@ Route::get('/protected', function () {
 })->middleware('auth:api');
 
 Route::post('/users',[UserController::class,'store']);
+
+Route::get('/class/student/{id}', [ClassMateController::class, 'getStudents']);
