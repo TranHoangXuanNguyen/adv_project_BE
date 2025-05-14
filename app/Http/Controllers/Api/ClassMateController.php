@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassMate;
+use App\Models\User;
 
 class ClassMateController extends Controller
 {
@@ -19,5 +20,13 @@ class ClassMateController extends Controller
             'class_id' => $class->id,
             'students' => $class->students
         ]);
+    }
+
+    public function getAllStudents()
+    {
+        $students = User::where('role', 'student')
+            ->whereHas('classes')
+            ->get();
+        return response()->json($students);
     }
 }
