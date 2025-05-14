@@ -34,3 +34,4 @@ Route::get('/protected', function () {
 Route::post('/users',[UserController::class,'store']);
 
 Route::get('/class/student/{id}', [ClassMateController::class, 'getStudents']);
+Route::get('/students', [ClassMateController::class, 'getAllStudents']);
