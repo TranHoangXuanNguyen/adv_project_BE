@@ -3,6 +3,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ClassController;
 use App\Http\Middleware\CheckAdmin;
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,6 @@ Route::get('/protected', function () {
 })->middleware('auth:api');
 
 Route::post('/users',[UserController::class,'store']);
+
+Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::class);
+Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
