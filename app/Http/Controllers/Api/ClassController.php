@@ -54,7 +54,7 @@ class ClassController extends Controller
 
     public function storeClassPlan(Request $request)
     {
-        
+
         $classPlan = $this->classService->saveClassPlan($request->all());
 
         return response()->json([
@@ -62,7 +62,7 @@ class ClassController extends Controller
             'data' => $classPlan,
         ], 201);
     }
-}
+
   public function getAll() {
         $classes = $this->classService->getAll();
         return response()->json([
