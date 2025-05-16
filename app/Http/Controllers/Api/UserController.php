@@ -37,4 +37,14 @@ class UserController extends Controller
             ], 422);
         }
     }
+
+    public function getByRole(string $role): JsonResponse
+    {
+        try {
+            $listUser = $this->userService->getByRole($role);
+            return response()->json($listUser, 201);
+        }catch (\Throwable $th){
+            return response()->json($th->getMessage(),401);
+        }
+    }
 }
