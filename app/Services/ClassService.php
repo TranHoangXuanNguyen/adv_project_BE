@@ -2,9 +2,11 @@
 namespace App\Services;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Repositories\Interfaces\ISemesterRepository;
+use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 class ClassService
 {
@@ -49,6 +51,11 @@ class ClassService
         }
     }
 
+    public function getAllClasses(){
+        return $this->classRepository->getAllClasses();
+    }
+
+
     public function createNewSemester(int $id , string $semesterName)
     {
         return $this->semesterRepository->create([
@@ -62,6 +69,18 @@ class ClassService
     public function getLastestSemester(int $classId)
     {
         return $this->semesterRepository->getLastestSemester($classId);
+    }
+
+
+
+    public function addStudentToClass(int $id,array $data)
+    {
+        try {
+            $this->validateClassDataToAdd($data,$id);
+            $this->classRepository->addStudentToClass($id,$data);
+        }catch (\Throwable $e){
+            throw $e;
+        }
     }
 
     protected function validateClassData(array $data): void
@@ -88,7 +107,21 @@ class ClassService
             'date' => 'required|date',
         ]);
 
-        // Nếu pass validate thì lưu data
+    function validateClassDataToAdd(array $data,int $id): void
+    {
+        $validator = Validator::make($data, [
+            'student_ids' => 'required|array',
+            'student_ids.*' => [
+                'distinct',
+                'exists:users,user_id',
+                Rule::unique('student_in_class', 'user_id'),
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+    }
         return $this->classRepository->saveClassPlan($validator->validated());
     }
 }
