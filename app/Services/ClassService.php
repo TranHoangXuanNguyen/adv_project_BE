@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Repositories\Interfaces\ISemesterRepository;
@@ -9,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-
 class ClassService
 {
     protected IClassRepository $classRepository;
@@ -21,6 +19,14 @@ class ClassService
         $this->semesterRepository = $semesterRepository;
     }
 
+    
+    public function getAll() {
+        return $this->classRepository->getAll();
+    }
+
+    public function getClassByStudents($id) {
+        return $this->classRepository->getById($id);
+    }
 
     public function createWithSemester(array $data)
     {
@@ -86,6 +92,20 @@ class ClassService
             throw new ValidationException($validator);
         }
     }
+    
+    public function saveClassPlan(array $data)
+    {
+        $validator = Validator::make($data, [
+            'user_id' => 'nullable|integer',
+            'subject_id' => 'required|integer',
+            'week_track_id' => 'required|integer',
+            'lesson_learn' => 'required|string',
+            'self_assessment' => 'required',
+            'difficult' => 'nullable|string',
+            'plan_to_improve' => 'nullable|string',
+            'in_solve' => 'nullable|integer',
+            'date' => 'required|date',
+        ]);
 
     function validateClassDataToAdd(array $data,int $id): void
     {
@@ -102,5 +122,6 @@ class ClassService
             throw new ValidationException($validator);
         }
     }
-
+        return $this->classRepository->saveClassPlan($validator->validated());
+    }
 }

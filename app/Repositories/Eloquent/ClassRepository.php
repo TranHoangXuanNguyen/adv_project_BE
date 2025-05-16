@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\ClassMate;
 use App\Repositories\Interfaces\IClassRepository;
+use App\Models\ClassPlan;
 
 class ClassRepository implements IClassRepository
 {
@@ -12,10 +13,15 @@ class ClassRepository implements IClassRepository
     {
         $this->classmodel = $model;
     }
+    public function getAll()
+    {
+        return $this->classmodel->all();
+    }
     public function getById($id)
     {
         return $this->classmodel->findOrFail($id);
     }
+
     public function create(array $data)
     {
         return $this->classmodel->create($data);
@@ -73,6 +79,9 @@ class ClassRepository implements IClassRepository
         }catch (\Exception $e) {
             throw $e;
         }
+    public function saveClassPlan(array $data)
+    {
+        return ClassPlan::create($data);
     }
 }
 

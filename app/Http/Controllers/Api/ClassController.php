@@ -26,15 +26,6 @@ class ClassController extends Controller
         }
     }
 
-    public function getAll() : JsonResponse{
-        try {
-            return response()->json($this->classService->getAllClasses());
-        }catch (\Throwable $th){
-            return response()->json($th->getMessage());
-        }
-    }
-
-
     public function addStudentToClass(int $id, Request $req): JsonResponse
     {
         try {
@@ -61,4 +52,22 @@ class ClassController extends Controller
         }
     }
 
+    public function storeClassPlan(Request $request)
+    {
+        
+        $classPlan = $this->classService->saveClassPlan($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $classPlan,
+        ], 201);
+    }
+}
+  public function getAll() {
+        $classes = $this->classService->getAll();
+        return response()->json([
+            'success' => true,
+            'data' => $classes
+        ]);
+    }
 }
