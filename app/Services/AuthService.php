@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Services;
-
 use App\Repositories\Interfaces\IAuthRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -10,12 +8,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthService
 {
     protected $userRepository;
-
     public function __construct(IAuthRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
-
     /**
      * Register a new user
      *
@@ -30,7 +26,6 @@ class AuthService
             'password' => 'required|string|min:6',
             'role' => 'required|string|in:admin,teacher,student',
         ]);
-
         if ($validator->fails()) {
             return ['error' => $validator->errors(), 'status' => 400];
         }
