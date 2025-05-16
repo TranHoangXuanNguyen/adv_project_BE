@@ -6,6 +6,7 @@ use App\Repositories\Interfaces\IUserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use PhpParser\Node\Scalar\String_;
 
 class UserService
 {
@@ -59,5 +60,10 @@ class UserService
     protected function extractUsernameFromEmail(string $email): string
     {
         return explode('@', $email)[0];
+    }
+
+    public function getByRole(string $role): array
+    {
+        return $this->userRepository->getByRole($role);
     }
 }
