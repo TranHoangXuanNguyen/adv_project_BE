@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClassController;
+use App\Http\Controllers\Api\SelfStudyPlanController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\Api\SubjectController;
 /*
@@ -34,6 +35,13 @@ Route::get('/class',[ClassController::class,'getAll']);
 Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::class);
 Route::get('/class',[ClassController::class,'getAll']);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
+Route::get('/class',[ClassController::class,'getAll']);
+// GET danh sách
+Route::get('self-study-plans', [SelfStudyPlanController::class, 'index']);
+// POST tạo mới
+Route::post('self-study-plans', [SelfStudyPlanController::class, 'store']);
+// GET theo week_track_id
+Route::get('self-study-plans/week/{weekTrackId}', [SelfStudyPlanController::class, 'getByWeekTrack']);
 Route::get('/users/{role}', [UserController::class, 'getByRole']);
 Route::post('/class/{id}/students',[ClassController::class,'addStudentToClass'])->middleware(CheckAdmin::class);
 Route::post('/semesters/{id}/subject',[SubjectController::class,'storeBySemester'])->middleware(CheckAdmin::class);

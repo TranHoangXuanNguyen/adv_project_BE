@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 class ClassController extends Controller
 {
     protected $classService;
+    
     public function __construct(ClassService $classService)
     {
         $this->classService = $classService;

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SelfStudyPlan extends Model
 {
+    protected $table = 'self_study_plan';
+    
     protected $primaryKey = 'self_plan_id';
 
     protected $fillable = [
