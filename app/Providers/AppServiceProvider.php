@@ -7,7 +7,6 @@ use App\Repositories\Eloquent\SemesterGoalRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\ClassRepository;
 use App\Repositories\Eloquent\SemesterRepository;
-
 use App\Repositories\Interfaces\IClassRepository;
 use App\Repositories\Interfaces\ISemesterGoalRepository;
 use App\Repositories\Interfaces\ISemesterRepository;
