@@ -6,8 +6,6 @@ use App\Repositories\Eloquent\AuthRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\ClassRepository;
 use App\Repositories\Eloquent\SemesterRepository;
-
-use App\Repositories\Interfaces\IClassRepository;
 use App\Repositories\Interfaces\ISemesterRepository;
 use App\Repositories\Interfaces\IAuthRepository;
 use App\Repositories\Interfaces\IUserRepository;
