@@ -41,9 +41,9 @@ class ClassRepository implements IClassRepository
     public function getAllClasses()
     {
         $classes = $this->classmodel::withCount('students')
-        ->with('latestSemester')
-        ->get()
-            ->map(function($class) {
+            ->with('latestSemester')
+            ->get()
+            ->map(function ($class) {
                 return [
                     'class_id' => $class->class_id,
                     'name' => $class->name,
@@ -79,9 +79,11 @@ class ClassRepository implements IClassRepository
         }catch (\Exception $e) {
             throw $e;
         }
+    }
     public function saveClassPlan(array $data)
     {
         return ClassPlan::create($data);
     }
+
 }
 
