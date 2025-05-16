@@ -47,6 +47,7 @@ class UserService
     {
         return [
             'email' => $data['email'],
+            'role' => $data['role'] ?? 'student',
             'name' => $this->extractUsernameFromEmail($data['email']),
             'password' => Hash::make($data['password'] ?? '12345678'),
         ];

@@ -1,18 +1,17 @@
 <?php
+
 namespace App\Repositories\Eloquent;
 
 use App\Models\ClassMate;
 use App\Repositories\Interfaces\IClassRepository;
 
-class ClassRepository implements IClassRepository {
-    
-    protected $model;
-
-    public function __construct(ClassMate $classMate)
+class ClassRepository implements IClassRepository
+{
+    protected $classmodel;
+    public function __construct(ClassMate $model)
     {
-        $this->model = $classMate;
+        $this->classmodel = $model;
     }
-
     public function getAll()
     {
         return $this->model->all();
@@ -21,4 +20,20 @@ class ClassRepository implements IClassRepository {
     {
         return $this->model->findOrFail($id);
     }
+    public function create(array $data)
+    {
+        return $this->classmodel->create($data);
+    }
+    public function update($id, array $data)
+    {
+        $record = $this->model->findOrFail($id);
+        $record->update($data);
+        return $record;
+    }
+    public function delete($id)
+    {
+        $record = $this->model->findOrFail($id);
+        $record->delete();
+    }
 }
+
