@@ -25,4 +25,11 @@ class ClassController extends Controller
             return response()->json($th->getMessage());
         }
     }
+  public function getAll() {
+        $classes = $this->classService->getAll();
+        return response()->json([
+            'success' => true,
+            'data' => $classes
+        ]);
+    }
 }
