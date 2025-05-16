@@ -67,5 +67,22 @@ class ClassService
             throw new ValidationException($validator);
         }
     }
+    
+    public function saveClassPlan(array $data)
+    {
+        $validator = Validator::make($data, [
+            'user_id' => 'required',
+            'subject_id' => 'required',
+            'week_track_id' => 'required',
+            'lesson_learn' => 'required|string',
+            'self_assessment' => 'required',
+            'difficult' => 'nullable|string',
+            'plan_to_improve' => 'nullable|string',
+            'in_solve' => 'nullable|integer',
+            'date' => 'required|date',
+        ]);
 
+        // Nếu pass validate thì lưu data
+        return $this->classRepository->saveClassPlan($validator->validated());
+    }
 }
