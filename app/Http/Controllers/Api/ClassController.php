@@ -36,3 +36,11 @@ class ClassController extends Controller
         ], 201);
     }
 }
+  public function getAll() {
+        $classes = $this->classService->getAll();
+        return response()->json([
+            'success' => true,
+            'data' => $classes
+        ]);
+    }
+}

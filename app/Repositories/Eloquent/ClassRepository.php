@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\ClassMate;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Models\ClassPlan;
+
 class ClassRepository implements IClassRepository
 {
     protected $classmodel;
@@ -20,6 +21,7 @@ class ClassRepository implements IClassRepository
     {
         return $this->classmodel->findOrFail($id);
     }
+
     public function create(array $data)
     {
         return $this->classmodel->create($data);
