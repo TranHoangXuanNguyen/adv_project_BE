@@ -35,3 +35,6 @@ Route::post('/users',[UserController::class,'store']);
 Route::get('/class',[ClassController::class,'getAll']);
 Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::class);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
+
+Route::post('/classplan',[ClassController::class,'storeClassPlan']);
+Route::get('/classplan', [ClassController::class, 'index']);

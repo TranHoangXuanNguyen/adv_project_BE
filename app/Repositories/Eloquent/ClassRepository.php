@@ -4,7 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\ClassMate;
 use App\Repositories\Interfaces\IClassRepository;
-
+use App\Models\ClassPlan;
 
 class ClassRepository implements IClassRepository
 {
@@ -36,6 +36,10 @@ class ClassRepository implements IClassRepository
     {
         $record = $this->classmodel->findOrFail($id);
         $record->delete();
+    }
+    public function saveClassPlan(array $data)
+    {
+        return ClassPlan::create($data);
     }
 }
 
