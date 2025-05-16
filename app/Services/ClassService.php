@@ -71,9 +71,9 @@ class ClassService
     public function saveClassPlan(array $data)
     {
         $validator = Validator::make($data, [
-            'user_id' => 'required',
-            'subject_id' => 'required',
-            'week_track_id' => 'required',
+            'user_id' => 'nullable|integer',
+            'subject_id' => 'required|integer',
+            'week_track_id' => 'required|integer',
             'lesson_learn' => 'required|string',
             'self_assessment' => 'required',
             'difficult' => 'nullable|string',

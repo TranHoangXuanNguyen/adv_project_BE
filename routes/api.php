@@ -36,3 +36,4 @@ Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
 
 Route::post('/classplan',[ClassController::class,'storeClassPlan']);
+Route::get('/classplan', [ClassController::class, 'index']);
