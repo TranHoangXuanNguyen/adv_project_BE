@@ -10,4 +10,7 @@ interface ISemesterRepository
     public function delete($id);
 
     public function getLastestSemester($classId);
+
+    public function storeBySemester(int $id,array $data);
+
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('weekly_tracking', function (Blueprint $table) {
             $table->id('week_track_id');
+            $table->string('week_name', 250);
             $table->unsignedBigInteger('semester_id');
             $table->dateTime('start_day');
             $table->dateTime('end_day');

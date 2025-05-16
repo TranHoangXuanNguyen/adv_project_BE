@@ -107,6 +107,7 @@ class DataSeeder extends Seeder
                     $end = (clone $start)->addDays(6);
                     $weekTrackIds[] = DB::table('weekly_tracking')->insertGetId([
                         'semester_id' => $semesterId,
+                        'week_name' => "Tuần $w",
                         'start_day' => $start,
                         'end_day' => $end,
                         'created_at' => now(),
