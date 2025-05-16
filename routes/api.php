@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Api\SemesterGoalController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,11 @@ Route::get('/class',[ClassController::class,'getAll']);
 Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::class);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
 
+Route::middleware('auth:api')->group(function () {
+    // Route::get('/week/class-plan', [WeekPlanController::class, 'getClassPlanByWeek']);
+    // Route::get('/week/self-study', [WeekPlanController::class, 'getSelfStudyByWeek']);
+    Route::post('/semester-goals', [SemesterGoalController::class, 'store']);
+    Route::get('/semester-goals', [SemesterGoalController::class, 'index']);
+});
 Route::post('/classplan',[ClassController::class,'storeClassPlan']);
 Route::get('/classplan', [ClassController::class, 'index']);
