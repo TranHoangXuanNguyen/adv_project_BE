@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClassController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\Api\SubjectController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,8 +17,6 @@ use App\Http\Middleware\CheckAdmin;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
 // Add more API routes here
 Route::post('/create', [AuthController::class, 'create']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -30,13 +29,14 @@ Route::get('/hello', function () {
 Route::get('/protected', function () {
     return response()->json(['message' => 'This route is protected by JWT!']);
 })->middleware('auth:api');
-
 Route::post('/users',[UserController::class,'store']);
-
 Route::get('/class',[ClassController::class,'getAll']);
 Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::class);
+Route::get('/class',[ClassController::class,'getAll']);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
-
+Route::get('/users/{role}', [UserController::class, 'getByRole']);
+Route::post('/class/{id}/students',[ClassController::class,'addStudentToClass'])->middleware(CheckAdmin::class);
+Route::post('/semesters/{id}/subject',[SubjectController::class,'storeBySemester'])->middleware(CheckAdmin::class);
 Route::middleware('auth:api')->group(function () {
     // Route::get('/week/class-plan', [WeekPlanController::class, 'getClassPlanByWeek']);
     // Route::get('/week/self-study', [WeekPlanController::class, 'getSelfStudyByWeek']);
