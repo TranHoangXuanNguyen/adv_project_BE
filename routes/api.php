@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClassController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\Api\SubjectController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,4 +34,9 @@ Route::get('/protected', function () {
 Route::post('/users',[UserController::class,'store']);
 
 Route::post('/class',[ClassController::class,'create'])->middleware(CheckAdmin::class);
+Route::get('/class',[ClassController::class,'getAll']);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
+Route::get('/users/{role}', [UserController::class, 'getByRole']);
+Route::post('/class/{id}/students',[ClassController::class,'addStudentToClass'])->middleware(CheckAdmin::class);
+Route::post('/semesters/{id}/subject',[SubjectController::class,'storeBySemester'])->middleware(CheckAdmin::class);
+

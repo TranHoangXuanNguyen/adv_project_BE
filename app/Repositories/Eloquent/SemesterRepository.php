@@ -47,4 +47,12 @@ class SemesterRepository implements ISemesterRepository
             ->first();
     }
 
+    public function storeBySemester(int $id,array $data)
+    {
+        $semester = Semester::findOrFail($id);
+        $subject =  $semester->subjects()->create([
+            'subject_name' => $data['subject_name'],
+        ]);
+        return $subject->toArray();
+    }
 }
