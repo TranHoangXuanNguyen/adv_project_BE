@@ -15,15 +15,20 @@ return new class extends Migration
             $table->id('week_track_id');
             $table->string('week_name', 250);
             $table->unsignedBigInteger('semester_id');
+            $table->unsignedBigInteger('user_id');
             $table->dateTime('start_day');
             $table->dateTime('end_day');
             $table->timestamps();
 
-            // FK: Mỗi tuần theo dõi thuộc 1 học kỳ
             $table->foreign('semester_id')
                 ->references('semester_id')->on('semesters')
                 ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('user_id')->on('users')
+                ->onDelete('cascade');
         });
+
     }
 
     /**

@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 class ClassController extends Controller
 {
     protected $classService;
+
     public function __construct(ClassService $classService)
     {
         $this->classService = $classService;
@@ -64,10 +65,20 @@ class ClassController extends Controller
     }
 
   public function getAll() {
-        $classes = $this->classService->getAll();
+        $classes = $this->classService->getAllClasses();
         return response()->json([
             'success' => true,
             'data' => $classes
         ]);
     }
+
+    public function getClassInfor(int $user_id){
+        $class = $this->classService->getClassInfor($user_id);
+        return response()->json([
+            'success' => true,
+            'data' => $class
+        ]);
+    }
+
+
 }

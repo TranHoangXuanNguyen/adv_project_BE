@@ -13,4 +13,6 @@ interface ISemesterRepository
 
     public function storeBySemester(int $id,array $data);
 
+    public function getSubjectsBySemester(int $id);
+
 }
