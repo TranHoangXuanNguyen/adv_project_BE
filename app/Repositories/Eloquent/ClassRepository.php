@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\ClassMate;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Models\ClassPlan;
+use Illuminate\Support\Facades\DB;
 
 class ClassRepository implements IClassRepository
 {
@@ -83,6 +84,38 @@ class ClassRepository implements IClassRepository
     public function saveClassPlan(array $data)
     {
         return ClassPlan::create($data);
+    }
+
+    public function getClassInfor(int $id)
+    {
+        try {
+            $classInfo = DB::table('student_in_class')
+                ->join('class_mates', 'student_in_class.class_id', '=', 'class_mates.class_id')
+                ->where('student_in_class.user_id', $id)
+                ->select('class_mates.class_id as class_id', 'class_mates.name as class_name')
+                ->first();
+
+            if (!$classInfo) {
+                return response()->json(['message' => 'Student is not assigned to any class'], 404);
+            }
+
+            $semester = DB::table('semesters')
+                ->where('class_id', $classInfo->class_id)
+                ->orderByDesc('start_date')
+                ->select('semester_id', 'semester_name', 'start_date')
+                ->first();
+
+            if (!$semester) {
+                return response()->json(['message' => 'No semester found for this class'], 404);
+            }
+
+            return response()->json([
+                'class' => $classInfo,
+                'semester' => $semester
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
+        }
     }
 
 }
