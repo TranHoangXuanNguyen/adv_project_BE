@@ -19,7 +19,7 @@ class ClassService
         $this->semesterRepository = $semesterRepository;
     }
 
-    
+
     public function getAll() {
         return $this->classRepository->getAll();
     }
@@ -92,7 +92,7 @@ class ClassService
             throw new ValidationException($validator);
         }
     }
-    
+
     public function saveClassPlan(array $data)
     {
         $validator = Validator::make($data, [
@@ -106,6 +106,8 @@ class ClassService
             'in_solve' => 'nullable|integer',
             'date' => 'required|date',
         ]);
+        return $this->classRepository->saveClassPlan($validator->validated());
+    }
 
     function validateClassDataToAdd(array $data,int $id): void
     {
@@ -122,6 +124,9 @@ class ClassService
             throw new ValidationException($validator);
         }
     }
-        return $this->classRepository->saveClassPlan($validator->validated());
+
+    public function getClassInfor($userId){
+        return $this->classRepository->getClassInfor($userId);
     }
+
 }

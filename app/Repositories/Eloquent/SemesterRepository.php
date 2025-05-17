@@ -55,4 +55,12 @@ class SemesterRepository implements ISemesterRepository
         ]);
         return $subject->toArray();
     }
+
+    public function getSubjectsBySemester(int $id)
+    {
+        $semester = Semester::findOrFail($id);
+        return $semester->subjects()->get();
+    }
+
+
 }

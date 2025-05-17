@@ -6,13 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class WeeklyTracking extends Model
 {
+    protected $table = 'weekly_tracking';
     protected $primaryKey = 'week_track_id';
 
-    protected $fillable = ['semester_id', 'start_day', 'end_day'];
+    protected $fillable = [
+        'week_name',
+        'semester_id',
+        'user_id',
+        'start_day',
+        'end_day'
+    ];
 
     public function semester()
     {
         return $this->belongsTo(Semester::class, 'semester_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function weeklyGoals()
