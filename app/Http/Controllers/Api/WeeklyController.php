@@ -83,4 +83,14 @@ class WeeklyController extends Controller
     }
 
 
+    public function updateWeeklyGoalStatus(int $id){
+        try {
+            $result = $this->weeklyService->updateWeeklyGoalStatus($id);
+            return response()->json($result);
+        }catch (\Throwable $th) {
+            return response()->json($th->getMessage());
+        }
+    }
+
+
 }
