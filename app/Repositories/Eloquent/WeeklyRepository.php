@@ -53,4 +53,16 @@ class WeeklyRepository implements IWeeklyRepository
     {
         // TODO: Implement getSelfPlan() method.
     }
+
+    public function updateWeeklyGoalStatus(int $id)
+    {
+        $goal = $this->weeklygoalmodel->where('week_goal_id', $id)->first();
+        if(!$goal){
+            throw new \Exception('Goal not found');
+        }
+        $goal->status = $goal->status == 1 ? 0 : 1;
+        $goal->save();
+
+        return response()->json(['message' => 'Status updated', 'status' => $goal->status]);
+    }
 }
