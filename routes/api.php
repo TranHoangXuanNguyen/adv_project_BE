@@ -78,4 +78,4 @@ Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsB
 */
 Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking']);
 Route::post('/weekly-goal', [WeeklyController::class, 'createWeeklyGoal']);
-
+Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']);

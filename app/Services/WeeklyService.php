@@ -29,5 +29,10 @@ class WeeklyService
         return $this->weeklyRepository->getClassPlan($id,$week_track_id);
     }
 
+    public function updateWeeklyGoalStatus(int $id)
+    {
+        return $this->weeklyRepository->updateWeeklyGoalStatus($id);
+    }
+
 
 }
