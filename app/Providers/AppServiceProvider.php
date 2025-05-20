@@ -4,12 +4,16 @@ namespace App\Providers;
 
 use App\Http\Controllers\Api\WeeklyController;
 use App\Repositories\Eloquent\AuthRepository;
+use App\Repositories\Eloquent\ClassPlanRepository;
+use App\Repositories\Eloquent\SelfPlanRepository;
 use App\Repositories\Eloquent\SemesterGoalRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\ClassRepository;
 use App\Repositories\Eloquent\SemesterRepository;
 use App\Repositories\Eloquent\SelfStudyPlanRepository;
 use App\Repositories\Eloquent\WeeklyRepository;
+use App\Repositories\Interfaces\IClassPlanRepository;
+use App\Repositories\Interfaces\ISelfPlanRepository;
 use App\Repositories\Interfaces\IWeeklyRepository;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Repositories\Interfaces\ISemesterGoalRepository;
@@ -35,6 +39,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ISelfStudyPlanRepository::class, SelfStudyPlanRepository::class);
         $this->app->bind(ISemesterGoalRepository::class, SemesterGoalRepository::class);
         $this->app->bind(IWeeklyRepository::class, WeeklyRepository::class);
+        $this->app->bind(IClassPlanRepository::class, ClassPlanRepository::class);
+        $this->app->bind(ISelfPlanRepository::class, SelfPlanRepository::class);
+
+
+
+
+        
 
 
 

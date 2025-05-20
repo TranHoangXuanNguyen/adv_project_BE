@@ -9,7 +9,7 @@ class SemesterGoal extends Model
     protected $primaryKey = 's_goal_id';
 
     protected $fillable = [
-        'student_id', 'subject_id',
+        'student_id', 'subject_id', 'semester_id',
         'course_expected', 'teacher_expected', 'themselves_expected',
     ];
 
