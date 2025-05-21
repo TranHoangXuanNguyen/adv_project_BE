@@ -106,4 +106,17 @@ class AuthService
             'expires_in' => config('jwt.ttl') * 60,
         ];
     }
+
+    public function saveFcmToken(array $data)
+    {
+        $validator = Validator::make($data, [
+            'token' => 'required|string',
+            'device_info' => 'nullable|string',
+        ]);
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
+        return $this->userRepository->saveFcmToken($data);
+    }
 }
