@@ -23,6 +23,7 @@ Route::post('/create', [AuthController::class, 'create']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/refresh', [AuthController::class, 'refresh']);
+Route::post('/fcm-token', [AuthController::class, 'saveFcmToken']);
 
 Route::get('/hello', function () {
     return response()->json(['message' => 'Hello from the API!']);

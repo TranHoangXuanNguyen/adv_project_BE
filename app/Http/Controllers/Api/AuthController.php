@@ -72,4 +72,12 @@ class AuthController extends Controller
         $result = $this->authService->refresh();
         return response()->json($result);
     }
+
+    public function saveFcmToken(Request $request){
+        $this->authService->saveFcmToken($request->all());
+        return response()->json([
+            'success' => true,
+            'message' => 'success'
+        ]);
+    }
 }
