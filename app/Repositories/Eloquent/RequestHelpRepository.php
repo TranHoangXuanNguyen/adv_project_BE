@@ -17,5 +17,13 @@ class RequestHelpRepository implements IRequestHelpRepository
     {
         return RequestHelp::create($data);
     }
-
-}
+    public function deleteRequestHelp($id){
+       return RequestHelp::find($id);    
+    }
+    public function paginate($perpage){
+            return RequestHelp::with(['sender','receiver'])
+                        ->orderBy('created_at','desc')
+                        ->paginate($perpage);
+    }
+    }
+      

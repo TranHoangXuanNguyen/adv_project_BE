@@ -84,4 +84,6 @@ Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatu
 
 
 Route::get('/requesthelp',[RequestHelpController::class,'getRequest']);
-Route::get('/requesthelp',[RequestHelpController::class,'saveRequestHelp']);
+Route::post('/requesthelp',[RequestHelpController::class,'saveRequestHelp']);
+Route::delete('/requesthelp/{id}', [RequestHelpController::class, 'deleteRequestHelp']);
+Route::get('/requesthelp/paginate', [RequestHelpController::class, 'paginate']);
