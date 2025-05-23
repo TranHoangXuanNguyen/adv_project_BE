@@ -20,6 +20,7 @@ class ClassService
     }
 
 
+
     public function getAll() {
         return $this->classRepository->getAll();
     }
@@ -64,6 +65,12 @@ class ClassService
             'start_date' =>now(),
         ]);
     }
+
+    public function getClassById($id)
+    {
+        return $this->classRepository->getClassById($id);
+    }
+
 
 
     public function getLastestSemester(int $classId)
