@@ -23,8 +23,8 @@ Route::post('/create', [AuthController::class, 'create']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/refresh', [AuthController::class, 'refresh']);
-Route::post('/fcm-token', [AuthController::class, 'saveFcmToken']);
-
+Route::post('/fcm-token', [AuthController::class, 'saveFcmToken'])->middleware('auth:api');
+Route::post('/send-notification', [AuthController::class, 'sendNotification']);
 Route::get('/hello', function () {
     return response()->json(['message' => 'Hello from the API!']);
 })->middleware(CheckAdmin::class);
@@ -33,10 +33,11 @@ Route::get('/users/{role}', [UserController::class, 'getByRole']);
 Route::post('/users', [UserController::class, 'store']);
 
 Route::get('/class', [ClassController::class, 'getAll']);
+Route::get('/class/{id}', [ClassController::class, 'getClassById']);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
 Route::get('/students/{id}/class-info', [ClassController::class, 'getClassInfor']);
 
-Route::get('/classplan', [ClassController::class, 'index']);
+//Route::get('/classplan', [ClassController::class, 'index']);
 Route::post('/classplan', [ClassController::class, 'storeClassPlan']);
 
 Route::get('/weekly-goals/{id}', [WeeklyController::class, 'getWeeklyByid']);
@@ -66,7 +67,6 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware(CheckAdmin::class)->group(function () {
     Route::post('/class', [ClassController::class, 'create']);
     Route::post('/class/{id}/students', [ClassController::class, 'addStudentToClass']);
-
     Route::post('/semesters/{id}/subject', [SubjectController::class, 'storeBySemester']);
 });
 

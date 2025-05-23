@@ -119,4 +119,17 @@ class AuthService
 
         return $this->userRepository->saveFcmToken($data);
     }
+
+    public function sendNotification(array $data){
+        $validator = Validator::make($data, [
+            'sender' => 'required|integer|exists:users,user_id',
+            'receiver' => 'nullable|integer|exists:users,user_id',
+            'content' => 'nullable|string',
+            'week_id' => 'nullable|integer',
+        ]);
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+        return $this->userRepository->sendNotification($data['sender'],$data['receiver'],$data['content'],$data['week_id']);
+    }
 }

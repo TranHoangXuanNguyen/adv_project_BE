@@ -11,10 +11,9 @@ class CreateFcmTokensTable extends Migration
         Schema::create('fcm_tokens', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('token')->unique();
+            $table->string('token',512)->unique();
             $table->string('device_info')->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
