@@ -4,5 +4,5 @@ namespace App\Repositories\Interfaces;
 
 interface ISelfPlanRepository
 {
-    public function getByStudentWeekSubject($studentId, $weekTrackId, $subjectId);
+    public function getByStudentWeekSubject($studentId, $weekTrackId);
 }

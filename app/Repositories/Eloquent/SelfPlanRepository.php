@@ -13,11 +13,10 @@ class SelfPlanRepository implements ISelfPlanRepository
         $this->model = $model;
     }
 
-    public function getByStudentWeekSubject($studentId, $weekTrackId, $subjectId)
+    public function getByStudentWeekSubject($studentId, $weekTrackId)
     {
         return $this->model->where('user_id', $studentId)
             ->where('week_track_id', $weekTrackId)
-            ->where('subject_id', $subjectId)
             ->get();
     }
 }
