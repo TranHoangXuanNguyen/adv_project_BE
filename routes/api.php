@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\{
     SemesterController,
     WeeklyController,
     SelfStudyPlanController,
-    SemesterGoalController
+    SemesterGoalController,
+    HelpRequestController,  
 };
 use App\Http\Middleware\CheckAdmin;
 
@@ -80,3 +81,15 @@ Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsB
 Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking']);
 Route::post('/weekly-goal', [WeeklyController::class, 'createWeeklyGoal']);
 Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']);
+
+/*
+|--------------------------------------------------------------------------
+| Help Request Routes
+|--------------------------------------------------------------------------
+*/
+
+// Route POST để tạo mới help request
+Route::post('/help-requests', [HelpRequestController::class, 'store']);
+
+// Thêm route GET nếu bạn cần lấy danh sách
+Route::get('/help-requests', [HelpRequestController::class, 'index']);
