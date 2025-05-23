@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\{
     SemesterController,
     WeeklyController,
     SelfStudyPlanController,
-    SemesterGoalController
+    SemesterGoalController,
+    RequestHelpController
 };
 use App\Http\Middleware\CheckAdmin;
 
@@ -80,3 +81,7 @@ Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsB
 Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking']);
 Route::post('/weekly-goal', [WeeklyController::class, 'createWeeklyGoal']);
 Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']);
+
+
+Route::get('/requesthelp',[RequestHelpController::class,'getRequest']);
+Route::get('/requesthelp',[RequestHelpController::class,'saveRequestHelp']);
