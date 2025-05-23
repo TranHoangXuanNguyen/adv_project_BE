@@ -15,7 +15,7 @@ class SubjectController extends Controller
         $this->subjectService = $subjectService;
     }
     public function create(Request $request): JsonResponse{
-        $result = $this->subjectService->create($request->all());
+        $result = $this->subjectService->create(Request $request);
         return response()->json($result);
     }
 
