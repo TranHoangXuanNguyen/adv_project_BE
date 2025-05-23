@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LearningPlanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
     AuthController,
@@ -56,6 +57,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/semester-goals', [SemesterGoalController::class, 'store']);
     Route::get('/semester-goals', [SemesterGoalController::class, 'index']);
+
+    Route::get('/show-classplan', [LearningPlanController::class, 'getClassPlans']);
+    Route::get('/show-selfstudyplan', [LearningPlanController::class, 'getSelfStudyPlans']);
 });
 
 /*
