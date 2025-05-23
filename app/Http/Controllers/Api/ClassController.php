@@ -27,6 +27,8 @@ class ClassController extends Controller
         }
     }
 
+
+
     public function addStudentToClass(int $id, Request $req): JsonResponse
     {
         try {
@@ -71,6 +73,21 @@ class ClassController extends Controller
             'data' => $classes
         ]);
     }
+
+    public function getClassById(int $classId): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $data = $this->classService->getClassById($classId);
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
+
 
     public function getClassInfor(int $user_id){
         $class = $this->classService->getClassInfor($user_id);
