@@ -30,6 +30,6 @@ class SelfPlanService
             throw new ValidationException($validator);
         }
 
-        return $this->repository->getByStudentWeekSubject($studentId, $weekTrackId, $subjectId);
+        return $this->repository->getByStudentWeekSubject($studentId, $weekTrackId);
     }
 }
