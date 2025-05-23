@@ -29,13 +29,29 @@ class RequestHelpService
         if($validator->fails()){
                 return [
                     'status'=>false,
-                    'erros'=>$validator->errors()
+                    'errors'=>$validator->errors()
                 ];
         }
         return $this->repository->saveRequestHelp($validator->validated());
     }
+     public function deleteRequestHelp($id){
+             $deleted = $this->repository->deleteRequestHelp($id);
 
+        if (!$deleted) {
+            return [
+                'status' => false,
+                'message' => 'Không tìm thấy yêu cầu để xóa',
+            ];
+        }
+         $deleted->delete();
+        return [
+            'status' => true,
+            'message' => 'Xóa thành công',
+        ];
     }
+     public function paginate($perpage){
+             return $this->repository->paginate($perpage);
+}
 
-        
+}
 
