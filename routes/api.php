@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\{
     WeeklyController,
     SelfStudyPlanController,
     SemesterGoalController,
+    RequestHelpController
     HelpRequestController,  
 };
 use App\Http\Middleware\CheckAdmin;
@@ -85,7 +86,10 @@ Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsB
 Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking']);
 Route::post('/weekly-goal', [WeeklyController::class, 'createWeeklyGoal']);
 Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']);
-
+Route::get('/requesthelp',[RequestHelpController::class,'getRequest']);
+Route::post('/requesthelp',[RequestHelpController::class,'saveRequestHelp']);
+Route::delete('/requesthelp/{id}', [RequestHelpController::class, 'deleteRequestHelp']);
+Route::get('/requesthelp/paginate', [RequestHelpController::class, 'paginate']);
 /*
 |--------------------------------------------------------------------------
 | Help Request Routes
