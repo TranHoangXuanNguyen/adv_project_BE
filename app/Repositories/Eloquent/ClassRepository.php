@@ -6,22 +6,31 @@ use App\Models\ClassMate;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Models\ClassPlan;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class ClassRepository implements IClassRepository
 {
     protected $classmodel;
-    public function __construct(ClassMate $model)
+    protected $usermodel;
+    public function __construct(ClassMate $model, User $usermodel)
     {
         $this->classmodel = $model;
+        $this->usermodel = $usermodel;
     }
     public function getAll()
     {
         return $this->classmodel->all();
     }
-    public function getById($id)
+    public function getClassById($id)
     {
-        return $this->classmodel->findOrFail($id);
+        $class = $this->classmodel->findOrFail($id);
+        $students = $class->students()->get();
+        return [
+            'class' => $class,
+            'students' => $students
+        ];
     }
+
 
     public function create(array $data)
     {

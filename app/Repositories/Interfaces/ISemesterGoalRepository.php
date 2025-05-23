@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Repositories\Interfaces;
+
 
 interface ISemesterGoalRepository
 {
@@ -11,5 +13,7 @@ interface ISemesterGoalRepository
      * @return \App\Models\SemesterGoal
      */
     public function create(array $data);
-     public function getGoalsBySemester($semesterId, $perPage = 10);
+    public function getGoalsBySemester($semesterId, $studentId = null);
+
+
 }
