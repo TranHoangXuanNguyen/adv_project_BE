@@ -10,4 +10,5 @@ interface IAuthRepository
     public function update($id, array $data);
     public function delete($id);
     public function saveFcmToken(array $data);
+    public function sendNotification(int $senderId,int $receiverId,string $content,int $week_id);
 }

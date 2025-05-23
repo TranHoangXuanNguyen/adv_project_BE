@@ -3,7 +3,6 @@ namespace App\Repositories\Interfaces;
 
 interface IClassRepository {
     public function getAll();
-    public function getById($id);
     public function create(array $data);
     public function update(int $id, array $data);
     public function delete(int $id);
@@ -12,4 +11,6 @@ interface IClassRepository {
     public function saveClassPlan(array $data);
 
     public function getClassInfor(int $id);
+
+    public function getClassById(int $it);
 }
