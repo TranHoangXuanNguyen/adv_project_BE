@@ -33,9 +33,8 @@ class LearningPlanController extends Controller
     {
         $studentId = $request->query('user_id');
         $weekTrackId = $request->query('week_track_id');
-        $subjectId = $request->query('subject_id');
 
-        $plans = $this->selfStudyPlanService->getPlans($studentId, $weekTrackId, $subjectId);
+        $plans = $this->selfStudyPlanService->getPlans($studentId, $weekTrackId);
 
         return response()->json(['self_study_plans' => $plans]);
     }
