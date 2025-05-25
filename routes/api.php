@@ -97,4 +97,5 @@ Route::get('/requesthelp/paginate', [RequestHelpController::class, 'paginate']);
 Route::post('/help-requests', [HelpRequestController::class, 'store']);
 Route::post('/users',[UserController::class,'store']);
 Route::get('/class/student/{id}', [ClassMateController::class, 'getStudents']);
+Route::get('/students', [ClassMateController::class, 'getAllStudents']);
 Route::get('/help-requests', [HelpRequestController::class, 'index']);
