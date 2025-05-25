@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreign('week_track_id')->references('week_track_id')->on('weekly_tracking')->onDelete('cascade');
         });
     }
-
+    
 
     /**
      * Reverse the migrations.
