@@ -23,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var string
      */
-    protected $primaryKey = 'user_id'; // If you're using user_id as PK
+    protected $primaryKey = 'user_id';
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +37,11 @@ class User extends Authenticatable implements JWTSubject
         'img',
         'role'
     ];
+
+    public function fcmTokens()
+    {
+        return $this->hasMany(FcmToken::class, 'user_id');
+    }
 
     public function classes()
     {

@@ -34,4 +34,10 @@ class UserRepository implements IUserRepository
         $record = $this->model->findOrFail($id);
         $record->delete();
     }
+
+    public function getByRole(string $role)
+    {
+        return $this->model->where('role', $role)->get()->toArray();
+    }
+
 }

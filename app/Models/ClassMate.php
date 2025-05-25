@@ -19,4 +19,9 @@ class ClassMate extends Model
     {
         return $this->belongsToMany(User::class, 'student_in_class', 'class_id', 'user_id');
     }
+
+    public function latestSemester()
+    {
+        return $this->hasOne(Semester::class, 'class_id', 'class_id')->latest('start_date');
+    }
 }
