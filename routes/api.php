@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\{
     HelpRequestController,  
 };
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\Api\ClassMateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +99,6 @@ Route::get('/requesthelp/paginate', [RequestHelpController::class, 'paginate']);
 
 // Route POST để tạo mới help request
 Route::post('/help-requests', [HelpRequestController::class, 'store']);
-
-// Thêm route GET nếu bạn cần lấy danh sách
+Route::post('/users',[UserController::class,'store']);
+Route::get('/class/student/{id}', [ClassMateController::class, 'getStudents']);
 Route::get('/help-requests', [HelpRequestController::class, 'index']);
