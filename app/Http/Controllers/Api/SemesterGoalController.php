@@ -44,13 +44,9 @@ class SemesterGoalController extends Controller
     {
         // Lấy dữ liệu goals từ JSON body
         $data = $request->json()->all();
-
-
         if (!isset($data['goals']) || !is_array($data['goals'])) {
             return response()->json(['message' => 'Invalid goals data'], 422);
         }
-
-
         // Validate mảng goals
         $validatedData = validator($data['goals'], [
             '*.semester_id' => 'required|integer|exists:semesters,semester_id',

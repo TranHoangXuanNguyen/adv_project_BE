@@ -11,8 +11,8 @@ use App\Http\Controllers\Api\{
     WeeklyController,
     SelfStudyPlanController,
     SemesterGoalController,
-    RequestHelpController
-    HelpRequestController,  
+    RequestHelpController,
+    HelpRequestController,
 };
 use App\Http\Middleware\CheckAdmin;
 
@@ -42,10 +42,8 @@ Route::get('/students/{id}/class-info', [ClassController::class, 'getClassInfor'
 
 //Route::get('/classplan', [ClassController::class, 'index']);
 Route::post('/classplan', [ClassController::class, 'storeClassPlan']);
-
 Route::get('/weekly-goals/{id}', [WeeklyController::class, 'getWeeklyByid']);
 Route::get('/weekly/class-plan', [WeeklyController::class, 'getClassPlan']);
-
 Route::get('self-study-plans', [SelfStudyPlanController::class, 'index']);
 Route::get('self-study-plans/week/{weekTrackId}', [SelfStudyPlanController::class, 'getByWeekTrack']);
 Route::post('self-study-plans', [SelfStudyPlanController::class, 'store']);
@@ -57,10 +55,8 @@ Route::post('self-study-plans', [SelfStudyPlanController::class, 'store']);
 */
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
-
-    Route::post('/semester-goals', [SemesterGoalController::class, 'store']);
+    Route::put('/semester-goals', [SemesterGoalController::class, 'store']);
     Route::get('/semester-goals', [SemesterGoalController::class, 'index']);
-
     Route::get('/show-classplan', [LearningPlanController::class, 'getClassPlans']);
     Route::get('/show-selfstudyplan', [LearningPlanController::class, 'getSelfStudyPlans']);
 });
