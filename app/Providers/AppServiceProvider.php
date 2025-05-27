@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\WeeklyController;
 use App\Repositories\Eloquent\AuthRepository;
 use App\Repositories\Eloquent\ClassPlanRepository;
 use App\Repositories\Eloquent\SelfPlanRepository;
-use App\Repositories\Eloquent\SemesterGoalRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\ClassRepository;
 use App\Repositories\Eloquent\SemesterRepository;
@@ -24,6 +23,7 @@ use App\Repositories\Interfaces\ISelfStudyPlanRepository;
 use App\Repositories\Interfaces\IRequestHelpRepository;
 use App\Repositories\Eloquent\HelpRequestRepository;
 use App\Repositories\Interfaces\IHelpRequestRepository;
+use App\Repositories\Eloquent\SemesterGoalRepository;
 
 use Illuminate\Support\ServiceProvider;
 
