@@ -73,10 +73,11 @@ class ClassService
 
 
 
-    public function getLastestSemester(int $classId)
-    {
-        return $this->semesterRepository->getLastestSemester($classId);
-    }
+  public function getLastestSemester($classId)
+{
+    return $this->classRepository->getLastestSemesterWithStudentsAndWeeks($classId);
+}
+
 
 
 

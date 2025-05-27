@@ -12,5 +12,7 @@ interface IClassRepository {
 
     public function getClassInfor(int $id);
 
-    public function getClassById(int $it);
+    public function getClassById(int $id);
+    public function getLastestSemesterWithStudentsAndWeeks(int $id);
+
 }
