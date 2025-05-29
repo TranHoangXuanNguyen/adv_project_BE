@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 namespace App\Services;
 
 use App\Repositories\Interfaces\IHelpRequestRepository;
-
 class HelpRequestService
 {
     protected $helpRequestRepository;

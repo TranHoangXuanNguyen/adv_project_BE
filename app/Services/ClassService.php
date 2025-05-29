@@ -19,8 +19,6 @@ class ClassService
         $this->semesterRepository = $semesterRepository;
     }
 
-
-
     public function getAll() {
         return $this->classRepository->getAll();
     }
@@ -55,7 +53,6 @@ class ClassService
     public function getAllClasses(){
         return $this->classRepository->getAllClasses();
     }
-
 
     public function createNewSemester(int $id , string $semesterName)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Services\WeeklyService;
 class WeeklyController extends Controller
@@ -18,8 +19,10 @@ class WeeklyController extends Controller
         return response()->json($result);
     }
 
-    public function getWeeklyByid(int $id): JsonResponse{
-        $result = $this->weeklyService->getAll($id);
+    public function getWeeklyById(int $id, int $semester_id): JsonResponse{
+        \Log::info('User ID:', ['user_id' => $id]);
+        \Log::info('Semester ID:', ['semester_id' => $semester_id]);
+        $result = $this->weeklyService->getAll($id, $semester_id);
         return response()->json($result);
     }
 
