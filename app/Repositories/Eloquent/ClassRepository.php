@@ -29,8 +29,7 @@ class ClassRepository implements IClassRepository
             'class' => $class,
             'students' => $students
         ];
-    }a
-
+    }
 
     public function create(array $data)
     {

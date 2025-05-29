@@ -9,9 +9,9 @@ class WeeklyService
     {
         $this->weeklyRepository = $weeklyRepository;
     }
-    public function getAll(int $id)
+    public function getAll(int $id, int $semester_id )
     {
-        return $this->weeklyRepository->getByid($id);
+        return $this->weeklyRepository->getByid($id, $semester_id);
     }
 
     public function createWeeklyTracking(array $data)

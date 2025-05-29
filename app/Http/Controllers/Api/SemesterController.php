@@ -20,7 +20,10 @@ class SemesterController extends Controller
         return response()->json($result);
     }
 
-
-
+    public function createNewSemester(int $id, Request $request): JsonResponse
+    {
+        $result =  $this->semesterService->createNewSemester($id , $request->all());
+        return response()->json($result);
+    }
 
 }

@@ -63,4 +63,19 @@ class SemesterRepository implements ISemesterRepository
     }
 
 
+    public function createNewSemester(int $id, array $data)
+    {
+        try {
+            $result = $this->model->insert([
+                'class_id' => $id,
+                'semester_name' => $data['semester_name'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'start_date' => date('Y-m-d H:i:s')
+            ]);
+
+            return $result;
+        }catch (\Throwable $th) {
+            return $th;
+        }
+    }
 }
