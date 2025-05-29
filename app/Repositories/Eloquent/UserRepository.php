@@ -40,4 +40,14 @@ class UserRepository implements IUserRepository
         return $this->model->where('role', $role)->get()->toArray();
     }
 
-}
+    public function paginatedByRole(string $role, int $perpage){
+        return User::where('role', $role)->paginate($perpage);
+    }
+    public function deletedById(int $id){
+        $user=User::findOrFail($id);
+          \DB::table('student_in_class')->where('user_id', $id)->delete();
+
+        $user->delete();
+        return response()->json(['message' => 'Student deleted successfully']);
+    }
+}   

@@ -7,6 +7,8 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use JsonException;
+use Psr\Http\Message\ResponseInterface;
 
 class UserController extends Controller
 {
@@ -37,7 +39,6 @@ class UserController extends Controller
             ], 422);
         }
     }
-
     public function getByRole(string $role): JsonResponse
     {
         try {
@@ -45,6 +46,31 @@ class UserController extends Controller
             return response()->json($listUser, 201);
         }catch (\Throwable $th){
             return response()->json($th->getMessage(),401);
+        }
+    }
+public function getPaginatedByRole(Request $request, string $role): JsonResponse{
+        try{
+            $perpage=$request->query('per_page',5);
+            $users=$this->userService->paginatedByRole($role, $perpage);
+            return response()->json([
+                'success'=>true,
+                'data'=>$users,
+            ]);
+        }catch(\Throwable $th){
+          return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+
+        }
+
+    }
+public function destroy(int $id): JsonResponse{
+        try{
+            $this->userService->deleteUser($id);
+            return response()->json([
+                 'success'=>true,
+                'message'=>'User deleted successfully',
+            ]);          
+        }catch(\Throwable $th){
+          return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
     }
 }
