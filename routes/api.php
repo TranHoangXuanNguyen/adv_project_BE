@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\{
     SemesterController,
     WeeklyController,
     SelfStudyPlanController,
+    ImageController,
     SemesterGoalController
 };
 use App\Http\Middleware\CheckAdmin;
@@ -19,32 +20,32 @@ use App\Http\Middleware\CheckAdmin;
 |--------------------------------------------------------------------------
 */
 
-Route::post('/create', [AuthController::class, 'create']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::post('/refresh', [AuthController::class, 'refresh']);
-Route::post('/fcm-token', [AuthController::class, 'saveFcmToken']);
+Route::post('/create', [AuthController::class, 'create']); // ch sua
+Route::post('/auth/login', [AuthController::class, 'login']); // "/login -> /auth/login"
+Route::post('/auth/logout', [AuthController::class, 'logout']); // "/logout -> /auth/logout"
+Route::post('/auth/refresh', [AuthController::class, 'refresh']); // "/refresh -> /auth/refresh"
+Route::post('/auth/fcm-token', [AuthController::class, 'saveFcmToken']); // "/fcm-token -> /auth/fcm-token"
 
-Route::get('/hello', function () {
+Route::get('/check-admin', function () {
     return response()->json(['message' => 'Hello from the API!']);
-})->middleware(CheckAdmin::class);
+})->middleware(CheckAdmin::class); // "/hello -> /check-admin"
 
-Route::get('/users/{role}', [UserController::class, 'getByRole']);
-Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{role}', [UserController::class, 'getByRole']); // ko sua
+Route::post('/users/new', [UserController::class, 'store']); // "/users -> /users/new"
 
-Route::get('/class', [ClassController::class, 'getAll']);
-Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
-Route::get('/students/{id}/class-info', [ClassController::class, 'getClassInfor']);
+Route::get('/class', [ClassController::class, 'getAll']); // ko sua
+Route::get('/class/current-semester/{id}', [ClassController::class, 'getLastestSemester']); // "/class/lastest-semester/{id} -> /class/current-semester/{id}"
+Route::get('/class/{id}', [ClassController::class, 'getClassInfor']); // "/students/{id}/class-info -> /class/{id}"
 
-Route::get('/classplan', [ClassController::class, 'index']);
-Route::post('/classplan', [ClassController::class, 'storeClassPlan']);
+Route::get('/classplan', [ClassController::class, 'index']); // chua sua
+Route::post('/classplan', [ClassController::class, 'storeClassPlan']); // chua sua
 
-Route::get('/weekly-goals/{id}', [WeeklyController::class, 'getWeeklyByid']);
-Route::get('/weekly/class-plan', [WeeklyController::class, 'getClassPlan']);
+Route::get('/week/goals/{id}', [WeeklyController::class, 'getWeeklyByid']); // "/weekly-goals/{id} -> /week/goals/{id}"
+Route::get('/week/class-plan', [WeeklyController::class, 'getClassPlan']); // "/weekly/class-plan -> /week/class-plan"
 
-Route::get('self-study-plans', [SelfStudyPlanController::class, 'index']);
-Route::get('self-study-plans/week/{weekTrackId}', [SelfStudyPlanController::class, 'getByWeekTrack']);
-Route::post('self-study-plans', [SelfStudyPlanController::class, 'store']);
+Route::get('self-study-plans', [SelfStudyPlanController::class, 'index']); //  chua
+Route::get('self-study-plans/week/{weekTrackId}', [SelfStudyPlanController::class, 'getByWeekTrack']); // chua
+Route::post('/week/seft-study', [SelfStudyPlanController::class, 'store']); // "self-study-plans -> /week/seft-study"
 
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +53,10 @@ Route::post('self-study-plans', [SelfStudyPlanController::class, 'store']);
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:api')->group(function () {
-    Route::get('/me', [AuthController::class, 'me']);
+    Route::get('/users/me', [AuthController::class, 'me']); // "//me -> /users/me"
 
-    Route::post('/semester-goals', [SemesterGoalController::class, 'store']);
-    Route::get('/semester-goals', [SemesterGoalController::class, 'index']);
+    Route::post('/semester-goals', [SemesterGoalController::class, 'store']); // chua
+    Route::get('/semester-goals', [SemesterGoalController::class, 'index']); // chua
 });
 
 /*
@@ -64,13 +65,13 @@ Route::middleware('auth:api')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(CheckAdmin::class)->group(function () {
-    Route::post('/class', [ClassController::class, 'create']);
-    Route::post('/class/{id}/students', [ClassController::class, 'addStudentToClass']);
+    Route::post('/create/class', [ClassController::class, 'create']); // "/class -> /create"
+    Route::post('/class/{id}/students', [ClassController::class, 'addStudentToClass']); // da them 
 
-    Route::post('/semesters/{id}/subject', [SubjectController::class, 'storeBySemester']);
+    Route::post('/semesters/{id}/subject', [SubjectController::class, 'storeBySemester']); // da them
 });
 
-Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsBySemester']);
+Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsBySemester']); // da sua
 
 /*
 |--------------------------------------------------------------------------
@@ -78,5 +79,7 @@ Route::get('/semesters/{id}/subjects', [SemesterController::class, 'getSubjectsB
 |--------------------------------------------------------------------------
 */
 Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking']);
-Route::post('/weekly-goal', [WeeklyController::class, 'createWeeklyGoal']);
-Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']);
+Route::post('/week/goal', [WeeklyController::class, 'createWeeklyGoal']); // "/weekly-goal -> /week/goal"
+Route::put('/week/goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']); // "/weely-goal/{id} -> /week/goal/{id}"
+
+Route::post('/images', [ImageController::class, 'store']);
