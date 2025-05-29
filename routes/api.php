@@ -35,6 +35,9 @@ Route::get('/hello', function () {
 
 Route::get('/users/{role}', [UserController::class, 'getByRole']);
 Route::post('/users', [UserController::class, 'store']);
+Route::delete('/users/{is}',[UserController::class,'destroy']);
+Route::get('/users/{role}/paginate', [UserController::class, 'getPaginatedByRole']);
+
 
 Route::get('/class', [ClassController::class, 'getAll']);
 Route::get('/class/{id}', [ClassController::class, 'getClassById']);

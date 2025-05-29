@@ -10,5 +10,7 @@ interface IUserRepository
     public function delete($id);
 
     public function getByRole(string $role);
+    public function paginatedByRole(string $role, int $perpage);
+    public function deletedById( int $id);
 
 }
