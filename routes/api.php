@@ -52,6 +52,10 @@ Route::get('/hello', function () {
 Route::get('/users/{role}', [UserController::class, 'getByRole']);
 Route::post('/users', [UserController::class, 'store']);
 Route::post('/class/{id}/semester', [SemesterController::class, 'createNewSemester']);
+Route::delete('/users/{is}',[UserController::class,'destroy']);
+Route::get('/users/{role}/paginate', [UserController::class, 'getPaginatedByRole']);
+
+
 Route::get('/class', [ClassController::class, 'getAll']);
 Route::get('/class/{id}', [ClassController::class, 'getClassById']);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
@@ -61,9 +65,9 @@ Route::get('/students/{id}/class-info', [ClassController::class, 'getClassInfor'
 Route::post('/classplan', [ClassController::class, 'storeClassPlan']);
 Route::get('/weekly-goals/{user_id}/{semester_id}', [WeeklyController::class, 'getWeeklyById']);
 Route::get('/weekly/class-plan', [WeeklyController::class, 'getClassPlan']);
-Route::get('self-study-plans', [SelfStudyPlanController::class, 'index']);
+Route::get('/weekly/self-plan', [SelfStudyPlanController::class, 'index']);
 Route::get('self-study-plans/week/{weekTrackId}', [SelfStudyPlanController::class, 'getByWeekTrack']);
-Route::post('self-study-plans', [SelfStudyPlanController::class, 'store']);
+Route::post('/weekly/self-plan', [SelfStudyPlanController::class, 'store']);
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +128,7 @@ Route::get('/help-requests', [HelpRequestController::class, 'index']);
 */
 
 Route::get('/notification/{id}', [NotifyController::class, 'getNotifyById']);
-
+Route::post('/remind', [NotifyController::class, 'remindDeadline']);
 
 
 

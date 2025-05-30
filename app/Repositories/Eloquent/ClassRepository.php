@@ -33,7 +33,6 @@ class ClassRepository implements IClassRepository
     }
 
 
-
     public function create(array $data)
     {
         return $this->classmodel->create($data);

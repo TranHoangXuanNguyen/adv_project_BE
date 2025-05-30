@@ -132,4 +132,9 @@ class AuthService
         }
         return $this->userRepository->sendNotification($data['sender'],$data['receiver'],$data['content'],$data['week_id']);
     }
+
+    public function remindDeadline(){
+        return $this->userRepository->remindDeadline();
+    }
+
 }

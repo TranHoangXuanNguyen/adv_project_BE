@@ -6,4 +6,6 @@ interface ISelfStudyPlanRepository
     public function create(array $data);
     public function getByWeekTrackId(int $weekTrackId);
     public function getAll();
+    public function getByStudentWeekSubject($studentId, $weekTrackId);
+
 }
