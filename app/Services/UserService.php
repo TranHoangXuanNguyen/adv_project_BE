@@ -66,4 +66,11 @@ class UserService
     {
         return $this->userRepository->getByRole($role);
     }
+     
+    public function paginatedByRole(string $role, int $perpage=6){
+        return $this->userRepository->paginatedByRole($role,$perpage);
+    }
+    public function deleteUser(int $id){
+        return $this->userRepository->deletedById($id);
+    }
 }

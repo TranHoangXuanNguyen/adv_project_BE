@@ -47,6 +47,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(ClassMate::class, 'student_in_class', 'user_id', 'class_id');
     }
+    // trong App\Models\User.php
+
+public function weekTracks()
+{
+    return $this->hasMany(WeeklyTracking::class, 'user_id');
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *
