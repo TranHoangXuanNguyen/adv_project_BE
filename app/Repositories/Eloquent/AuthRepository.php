@@ -117,5 +117,57 @@ class AuthRepository implements IAuthRepository
             ], 500);
         }
     }
+    public function remindDeadline(){
+        $start = microtime(true);
+        $users = $this->model->where('role', '=', 'student')->get();
+        if ($users->isEmpty()) {
+            return ['message' => 'No users found to send notifications'];
+        }
+        $credentialsPath = storage_path('/firebase/firebase-service-account.json');
+        $credentials = new ServiceAccountCredentials(
+            'https://www.googleapis.com/auth/firebase.messaging',
+            $credentialsPath
+        );
+        $accessToken = $credentials->fetchAuthToken()['access_token'];
+        $projectId = env('FIREBASE_PROJECT_ID');
 
+        $successCount = 0;
+        $failedCount = 0;
+
+        foreach ($users as $user) {
+            $token = $user->fcmTokens()->latest()->first()?->token;
+            if (!$token) {
+                \Log::warning("No FCM token for user_id: {$user->id}");
+                continue;
+            }
+            $content = "DO journal pls";
+            try {
+                $response = Http::withToken($accessToken)
+                    ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
+                        'message' => [
+                            'token' => $token,
+                            'notification' => [
+                                'title' => "Remind: you need to finish all deadline you have",
+                                'body' => $content,
+                            ],
+                            'data' => [
+                                'sender_id' => '1',
+                                'content' => $content,
+                            ],
+                        ],
+                    ]);
+                $successCount++;
+            } catch (\Exception $e) {
+                \Log::error("Failed to send FCM to user_id: {$user->id}, error: " . $e->getMessage());
+                $failedCount++;
+            }
+        }
+
+        \Log::info("remindDeadline took " . (microtime(true) - $start) . " seconds. Success: $successCount, Failed: $failedCount");
+        return [
+            'message' => 'Notifications processed',
+            'success_count' => $successCount,
+            'failed_count' => $failedCount,
+        ];
+    }
 }

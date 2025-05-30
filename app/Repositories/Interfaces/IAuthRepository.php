@@ -11,4 +11,5 @@ interface IAuthRepository
     public function delete($id);
     public function saveFcmToken(array $data);
     public function sendNotification(int $senderId,int $receiverId,string $content,int $week_id);
+    public function remindDeadline();
 }

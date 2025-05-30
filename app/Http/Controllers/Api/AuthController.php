@@ -86,4 +86,5 @@ class AuthController extends Controller
         return $this->authService->sendNotification($request->all());
     }
 
+
 }

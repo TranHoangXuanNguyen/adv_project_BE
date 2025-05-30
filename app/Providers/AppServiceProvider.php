@@ -24,8 +24,12 @@ use App\Repositories\Interfaces\ISelfStudyPlanRepository;
 use App\Repositories\Interfaces\IRequestHelpRepository;
 use App\Repositories\Eloquent\HelpRequestRepository;
 use App\Repositories\Interfaces\IHelpRequestRepository;
-
+use App\Repositories\Eloquent\NotifyRepository;
+use App\Repositories\Interfaces\INotifyRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Eloquent\ManagerRepository;
+use App\Repositories\Interfaces\IManagerRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,6 +50,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IHelpRequestRepository::class,HelpRequestRepository::class);
         $this->app->bind(IClassPlanRepository::class, ClassPlanRepository::class);
         $this->app->bind(ISelfPlanRepository::class, SelfPlanRepository::class);
+        $this->app->bind(INotifyRepository::class, NotifyRepository::class);
+        $this->app->bind(IManagerRepository::class, ManagerRepository::class);
     }
 
     /**

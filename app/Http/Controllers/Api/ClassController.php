@@ -19,13 +19,23 @@ class ClassController extends Controller
         return response()->json($result);
     }
 
-    public function getLastestSemester(int $classId) : JsonResponse{
-        try {
-            return response()->json($this->classService->getLastestSemester($classId));
-        } catch (\Throwable $th) {
-            return response()->json($th->getMessage());
-        }
+public function getLastestSemester(int $classId): JsonResponse
+{
+    try {
+        $data = $this->classService->getLastestSemester($classId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ]);
+    } catch (\Throwable $th) {
+        return response()->json([
+            'success' => false,
+            'message' => $th->getMessage(),
+        ], 500);
     }
+}
+
 
 
 
