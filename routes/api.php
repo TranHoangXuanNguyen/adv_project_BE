@@ -82,4 +82,6 @@ Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking'
 Route::post('/week/goal', [WeeklyController::class, 'createWeeklyGoal']); // "/weekly-goal -> /week/goal"
 Route::put('/week/goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']); // "/weely-goal/{id} -> /week/goal/{id}"
 
-Route::post('/images', [ImageController::class, 'store']);
+Route::get('/images', [ImageController::class, 'index']);
+Route::post('/images', [ImageController::class, 'store']); 
+Route::delete('/images/{id}', [ImageController::class, 'destroy']);
