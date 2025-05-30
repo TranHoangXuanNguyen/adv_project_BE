@@ -8,6 +8,7 @@ class SelfStudyPlanRepository implements ISelfStudyPlanRepository
 {
     public function create(array $data)
     {
+//        dd($data);
         return SelfStudyPlan::create($data);
     }
 
@@ -21,5 +22,12 @@ class SelfStudyPlanRepository implements ISelfStudyPlanRepository
     public function getAll()
     {
         return SelfStudyPlan::with(['subject', 'week'])->get();
+    }
+    public function getByStudentWeekSubject($studentId, $weekTrackId)
+    {
+        return SelfStudyPlan::where('user_id', $studentId)
+            ->where('week_track_id', $weekTrackId)
+            ->with(['subject', 'week'])
+            ->get();
     }
 }

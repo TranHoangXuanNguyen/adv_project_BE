@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\Facades\Http;
 
 Schedule::call(function () {
-    $response = Http::get('http://127.0.0.1:8000/api/class', [
+    $response = Http::post('http://127.0.0.1:8000/api/remind', [
         'message' => 'Request tự động từ Laravel!'
     ]);
     \Log::info('Task ran with response: ' . $response->body());
-})->dailyAt('21:05');
+})->dailyAt('09:38');
 

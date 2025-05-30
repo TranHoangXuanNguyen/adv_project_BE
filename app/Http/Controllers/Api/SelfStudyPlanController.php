@@ -19,27 +19,21 @@ class SelfStudyPlanController extends Controller
     /**
      * Lấy danh sách tất cả kế hoạch tự học (GET)
      */
-     public function index()
+     public function index(Request $request)
     {
-        try {
-            // Thêm debug trước khi gọi service
-            if (!isset($this->service)) {
-                throw new \RuntimeException("Service is not available!");
-            }
-            
-            $plans = $this->service->getAllPlans();
-            return response()->json([
-                'success' => true,
-                'data' => $plans
-            ]);
-        } catch (\Exception $e) {
-            // Log lỗi chi tiết
-            \Log::error("Error in SelfStudyPlanController: " . $e->getMessage());
+        $user_id = $request->input('user_id');
+        $week_track_id = $request->input('week_track_id');
+        if (!$user_id || !$week_track_id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Lỗi hệ thống: ' . $e->getMessage()
-            ], 500);
+                'message' => 'Missing required parameters: user_id, week_track_id'
+            ], 400);
         }
+        $weeklyTracking = $this->service->getPlans($user_id,$week_track_id);
+        return response()->json([
+            'success' => true,
+            'data' => $weeklyTracking
+        ]);
     }
 
     /**
@@ -48,27 +42,26 @@ class SelfStudyPlanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'user_id' => 'required',
             'subject_id' => 'required|integer|exists:subjects,subject_id',
-            'week_track_id' => 'required|integer|exists:weekly_trackings,week_track_id',
+            'week_track_id' => 'required|integer|exists:weekly_tracking,week_track_id',
             'lesson_learn' => 'required|string|max:500',
             'time_spend' => 'required|string|max:100',
             'learning_resource' => 'nullable|string|max:500',
             'learning_activities' => 'nullable|string|max:500',
-            'in_solve' => 'nullable|boolean',
-            'concentration' => 'nullable|integer|between:1,3',
+            'in_solve' => 'nullable',
+            'concentration' => 'nullable|integer|between:1,5',
             'date' => 'required|date'
         ]);
 
         try {
-            $validated['user_id'] = Auth::id();
             $plan = $this->service->createSelfStudyPlan($validated);
-            
             return response()->json([
                 'success' => true,
                 'data' => $plan,
                 'message' => 'Tạo kế hoạch thành công'
             ], 201);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -84,13 +77,13 @@ class SelfStudyPlanController extends Controller
     {
         try {
             $plans = $this->service->getPlansByWeekTrack($weekTrackId);
-            
+
             return response()->json([
                 'success' => true,
                 'data' => $plans,
                 'message' => 'Lấy kế hoạch theo tuần thành công'
             ]);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
