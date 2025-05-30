@@ -26,7 +26,6 @@ use App\Repositories\Eloquent\HelpRequestRepository;
 use App\Repositories\Interfaces\IHelpRequestRepository;
 use App\Repositories\Eloquent\NotifyRepository;
 use App\Repositories\Interfaces\INotifyRepository;
-use App\Services\ManagerService;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Eloquent\ManagerRepository;
 use App\Repositories\Interfaces\IManagerRepository;
