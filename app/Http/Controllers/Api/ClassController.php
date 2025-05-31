@@ -19,13 +19,25 @@ class ClassController extends Controller
         return response()->json($result);
     }
 
-    public function getLastestSemester(int $classId) : JsonResponse{
-        try {
-            return response()->json($this->classService->getLastestSemester($classId));
-        } catch (\Throwable $th) {
-            return response()->json($th->getMessage());
-        }
+public function getLastestSemester(int $classId): JsonResponse
+{
+    try {
+        $data = $this->classService->getLastestSemester($classId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ]);
+    } catch (\Throwable $th) {
+        return response()->json([
+            'success' => false,
+            'message' => $th->getMessage(),
+        ], 500);
     }
+}
+
+
+
 
     public function addStudentToClass(int $id, Request $req): JsonResponse
     {
@@ -71,6 +83,21 @@ class ClassController extends Controller
             'data' => $classes
         ]);
     }
+
+    public function getClassById(int $classId): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $data = $this->classService->getClassById($classId);
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
+
 
     public function getClassInfor(int $user_id){
         $class = $this->classService->getClassInfor($user_id);

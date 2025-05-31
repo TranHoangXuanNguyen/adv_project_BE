@@ -2,31 +2,37 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\ISelfStudyPlanRepository;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class SelfStudyPlanService
 {
-    protected $repository; // Đảm bảo property này tồn tại
+    protected $repository;
 
     public function __construct(ISelfStudyPlanRepository $repository)
     {
         $this->repository = $repository; // Đảm bảo gán repository
     }
 
-    public function getAllPlans()
+    public function getPlans($studentId, $weekTrackId)
     {
-        return $this->repository->getAll();
+        $validator = Validator::make([
+            'user_id' => $studentId,
+            'week_track_id' => $weekTrackId,
+        ], [
+            'user_id' => 'required|integer|exists:users,user_id',
+            'week_track_id' => 'required|integer|exists:weekly_tracking,week_track_id',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        return $this->repository->getByStudentWeekSubject($studentId, $weekTrackId);
     }
 
     public function createSelfStudyPlan(array $data)
     {
-        $required = ['user_id', 'subject_id', 'week_track_id', 'lesson_learn', 'time_spend', 'date'];
-        
-        foreach ($required as $field) {
-            if (!isset($data[$field])) {
-                throw new \InvalidArgumentException("Thiếu trường bắt buộc: {$field}");
-            }
-        }
-
         return $this->repository->create($data);
     }
 

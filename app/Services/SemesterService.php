@@ -15,4 +15,9 @@ class SemesterService
         return $result->toArray();
     }
 
+    public function createNewSemester(int $id, array $data)
+    {
+        return $this->semesterRepository->createNewSemester($id , $data);
+    }
+
 }

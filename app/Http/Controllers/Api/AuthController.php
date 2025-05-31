@@ -80,4 +80,11 @@ class AuthController extends Controller
             'message' => 'success'
         ]);
     }
+
+    public function sendNotification(Request $request)
+    {
+        return $this->authService->sendNotification($request->all());
+    }
+
+
 }

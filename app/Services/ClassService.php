@@ -19,7 +19,6 @@ class ClassService
         $this->semesterRepository = $semesterRepository;
     }
 
-
     public function getAll() {
         return $this->classRepository->getAll();
     }
@@ -55,7 +54,6 @@ class ClassService
         return $this->classRepository->getAllClasses();
     }
 
-
     public function createNewSemester(int $id , string $semesterName)
     {
         return $this->semesterRepository->create([
@@ -65,11 +63,18 @@ class ClassService
         ]);
     }
 
-
-    public function getLastestSemester(int $classId)
+    public function getClassById($id)
     {
-        return $this->semesterRepository->getLastestSemester($classId);
+        return $this->classRepository->getClassById($id);
     }
+
+
+
+  public function getLastestSemester($classId)
+{
+    return $this->classRepository->getLastestSemesterWithStudentsAndWeeks($classId);
+}
+
 
 
 
