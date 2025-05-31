@@ -3,25 +3,35 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\ClassMate;
+use App\Models\Semester;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Models\ClassPlan;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class ClassRepository implements IClassRepository
 {
     protected $classmodel;
-    public function __construct(ClassMate $model)
+    protected $usermodel;
+    public function __construct(ClassMate $model, User $usermodel)
     {
         $this->classmodel = $model;
+        $this->usermodel = $usermodel;
     }
     public function getAll()
     {
         return $this->classmodel->all();
     }
-    public function getById($id)
+    public function getClassById($id)
     {
-        return $this->classmodel->findOrFail($id);
+        $class = $this->classmodel->findOrFail($id);
+        $students = $class->students()->get();
+        return [
+            'class' => $class,
+            'students' => $students
+        ];
     }
+
 
     public function create(array $data)
     {
@@ -117,6 +127,30 @@ class ClassRepository implements IClassRepository
             return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
         }
     }
+
+public function getLastestSemesterWithStudentsAndWeeks($classId)
+{
+    $latestSemester = Semester::where('class_id', $classId)
+        ->orderByDesc('start_date')
+        ->first();
+
+    if (!$latestSemester) {
+        throw new \Exception('Không tìm thấy học kỳ mới nhất.');
+    }
+
+    // Lấy danh sách sinh viên và week_tracks của họ trong học kỳ này
+    $class = $this->classmodel->with([
+        'students.weekTracks' => function ($query) use ($latestSemester) {
+            $query->where('semester_id', $latestSemester->semester_id);
+        }
+    ])->findOrFail($classId);
+
+    return [
+        'semester' => $latestSemester,
+        'students' => $class->students,
+    ];
+}
+
 
 }
 

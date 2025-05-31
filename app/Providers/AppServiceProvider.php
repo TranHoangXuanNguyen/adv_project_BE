@@ -4,12 +4,16 @@ namespace App\Providers;
 
 use App\Http\Controllers\Api\WeeklyController;
 use App\Repositories\Eloquent\AuthRepository;
+use App\Repositories\Eloquent\ClassPlanRepository;
+use App\Repositories\Eloquent\SelfPlanRepository;
 use App\Repositories\Eloquent\SemesterGoalRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\ClassRepository;
 use App\Repositories\Eloquent\SemesterRepository;
 use App\Repositories\Eloquent\SelfStudyPlanRepository;
 use App\Repositories\Eloquent\WeeklyRepository;
+use App\Repositories\Interfaces\IClassPlanRepository;
+use App\Repositories\Interfaces\ISelfPlanRepository;
 use App\Repositories\Interfaces\IWeeklyRepository;
 use App\Repositories\Interfaces\IClassRepository;
 use App\Repositories\Interfaces\ISemesterGoalRepository;
@@ -17,8 +21,15 @@ use App\Repositories\Interfaces\ISemesterRepository;
 use App\Repositories\Interfaces\IAuthRepository;
 use App\Repositories\Interfaces\IUserRepository;
 use App\Repositories\Interfaces\ISelfStudyPlanRepository;
-
+use App\Repositories\Interfaces\IRequestHelpRepository;
+use App\Repositories\Eloquent\HelpRequestRepository;
+use App\Repositories\Interfaces\IHelpRequestRepository;
+use App\Repositories\Eloquent\NotifyRepository;
+use App\Repositories\Interfaces\INotifyRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Eloquent\ManagerRepository;
+use App\Repositories\Interfaces\IManagerRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,9 +46,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ISelfStudyPlanRepository::class, SelfStudyPlanRepository::class);
         $this->app->bind(ISemesterGoalRepository::class, SemesterGoalRepository::class);
         $this->app->bind(IWeeklyRepository::class, WeeklyRepository::class);
-
-
-
+        $this->app->bind(IRequestHelpRepository::class,RequestHelpRepository::class);
+        $this->app->bind(IHelpRequestRepository::class,HelpRequestRepository::class);
+        $this->app->bind(IClassPlanRepository::class, ClassPlanRepository::class);
+        $this->app->bind(ISelfPlanRepository::class, SelfPlanRepository::class);
+        $this->app->bind(INotifyRepository::class, NotifyRepository::class);
+        $this->app->bind(IManagerRepository::class, ManagerRepository::class);
     }
 
     /**

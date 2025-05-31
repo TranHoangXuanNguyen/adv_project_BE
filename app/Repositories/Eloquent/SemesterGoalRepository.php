@@ -1,30 +1,40 @@
 <?php
 
 namespace App\Repositories\Eloquent;
-use App\Repositories\Interfaces\ISemesterGoalRepository;
 
 use App\Models\SemesterGoal;
+use App\Repositories\Interfaces\ISemesterGoalRepository;
 
 class SemesterGoalRepository implements ISemesterGoalRepository
 {
+    public function findGoal(int $studentId, int $semesterId, int $subjectId)
+    {
+        return SemesterGoal::where('student_id', $studentId)
+            ->where('semester_id', $semesterId)
+            ->where('subject_id', $subjectId)
+            ->first();
+    }
+
     public function create(array $data)
     {
-        // Dùng Eloquent để tạo bản ghi
-        return SemesterGoal::create([
-            'student_id'   => $data['student_id'],
-            'subject_id'   => $data['subject_id'],
-            'semester_id'  => $data['semester_id'],
-            'course_expected'  => $data['course_expected'],
-            'teacher_expected' => $data['teacher_expected'],
-            'themselves_expected'    => $data['themselves_expected'],
-        ]);
+        return SemesterGoal::create($data);
     }
 
-public function getGoalsBySemester($semesterId, $perPage = 10)
+    public function update(int $id, array $data)
     {
-        return SemesterGoal::with(['subject', 'student'])
-            ->where('semester_id', $semesterId)
-            ->paginate($perPage);
+        $goal = SemesterGoal::find($id);
+        if ($goal) {
+            $goal->update($data);
+        }
+        return $goal;
     }
 
+    public function getGoalsBySemester(int $semesterId, ?int $studentId = null)
+    {
+        $query = SemesterGoal::where('semester_id', $semesterId);
+        if ($studentId) {
+            $query->where('student_id', $studentId);
+        }
+        return $query->get();
+    }
 }

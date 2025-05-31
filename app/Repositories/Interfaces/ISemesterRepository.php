@@ -15,4 +15,6 @@ interface ISemesterRepository
 
     public function getSubjectsBySemester(int $id);
 
+    public function createNewSemester(int $id, array $data);
+
 }

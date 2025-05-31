@@ -4,33 +4,50 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\ISemesterGoalRepository;
 
-use App\Repositories\ISemesterGoalRepository as RepositoriesISemesterGoalRepository;
-
 class SemesterGoalService
 {
-    protected $repository;
+    protected ISemesterGoalRepository $repository;
 
     public function __construct(ISemesterGoalRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function createGoals(int $studentId, array $goals): void
+    /**
+     * Cập nhật hoặc tạo mới các mục tiêu học kỳ của sinh viên
+     *
+     * @param int $studentId
+     * @param int $semesterId
+     * @param array $goals Mảng goal, mỗi phần tử có subject_id, course_expected, teacher_expected, themselves_expected
+     * @return void
+     */
+    public function updateGoals(int $studentId, int $semesterId, array $goals): void
     {
         foreach ($goals as $goal) {
-            $this->repository->create([
-                'student_id' => $studentId,
-                'subject_id' => $goal['subject_id'],
-                'semester_id' => $goal['semester_id'],
-                'course_expected' => $goal['course_expected'],
-                'teacher_expected' => $goal['teacher_expected'],
-                'themselves_expected' => $goal['themselves_expected'],
-            ]);
+            $subjectId = $goal['subject_id'];
+
+            $existingGoal = $this->repository->findGoal($studentId, $semesterId, $subjectId);
+
+            $data = [
+                'course_expected' => $goal['course_expected'] ?? '',
+                'teacher_expected' => $goal['teacher_expected'] ?? '',
+                'themselves_expected' => $goal['themselves_expected'] ?? '',
+            ];
+
+            if ($existingGoal && isset($existingGoal->s_goal_id)) {
+                $this->repository->update($existingGoal->s_goal_id, $data);
+            } else {
+                $this->repository->create([
+                    'student_id' => $studentId,
+                    'semester_id' => $semesterId,
+                    'subject_id' => $subjectId,
+                ] + $data);
+            }
         }
     }
-  public function getGoalsBySemester($semesterId, $perPage = 10)
-    {
-        return $this->repository->getGoalsBySemester($semesterId, $perPage);
-    }
 
+    public function getGoalsBySemester(int $semesterId, ?int $studentId = null)
+    {
+        return $this->repository->getGoalsBySemester($semesterId, $studentId);
+    }
 }
