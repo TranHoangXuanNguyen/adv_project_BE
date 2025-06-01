@@ -140,9 +140,7 @@ return [
     | such as Memcached. You may define your connection settings here.
     |
     */
-
     'redis' => [
-        //change into phpredis to predis, didn't need phpredis
         'client' => env('REDIS_CLIENT', 'predis'),
 
         'options' => [
@@ -166,9 +164,8 @@ return [
             'username' => env('REDIS_USERNAME'),
             'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
+            'database' => env('REDIS_CACHE_DB', '0'),
         ],
-
     ],
 
 ];

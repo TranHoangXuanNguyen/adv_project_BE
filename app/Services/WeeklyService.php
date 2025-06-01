@@ -14,6 +14,12 @@ class WeeklyService
         return $this->weeklyRepository->getByid($id, $semester_id);
     }
 
+    public function getWeeklyName(int $user_id)
+    {
+        return $this->weeklyRepository->getWeeklyName($user_id);
+
+    }
+
     public function createWeeklyTracking(array $data)
     {
         return $this->weeklyRepository->createWeeklyTracking($data);

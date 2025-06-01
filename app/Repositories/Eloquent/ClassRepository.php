@@ -8,15 +8,19 @@ use App\Repositories\Interfaces\IClassRepository;
 use App\Models\ClassPlan;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\WeeklyTracking;
+
 
 class ClassRepository implements IClassRepository
 {
     protected $classmodel;
     protected $usermodel;
-    public function __construct(ClassMate $model, User $usermodel)
+    protected $weeklyModel;
+    public function __construct(ClassMate $model, User $usermodel, WeeklyTracking $weeklyModel)
     {
         $this->classmodel = $model;
         $this->usermodel = $usermodel;
+        $this->weeklyModel = $weeklyModel;
     }
     public function getAll()
     {
@@ -24,13 +28,36 @@ class ClassRepository implements IClassRepository
     }
     public function getClassById($id)
     {
+        $latestSemester = Semester::where('class_id', $id)
+            ->orderByDesc('start_date')
+            ->first();
+        if (!$latestSemester) {
+            return response()->json(['message' => 'No semester found for this class'], 404);
+        }
+        $latestSemesterId = $latestSemester->semester_id;
         $class = $this->classmodel->findOrFail($id);
         $students = $class->students()->get();
+        $countWeeklyGoal = [];
+
+        foreach ($students as $student) {
+            $user_id = $student->user_id;
+            $count = $this->weeklyModel
+                ->where('user_id', $user_id)
+                ->where('semester_id', $latestSemesterId)
+                ->count();
+            $countWeeklyGoal[$user_id] = $count;
+        }
+        foreach ($students as $student) {
+            $user_id = $student->user_id;
+            $student->weekly_goal_count = $countWeeklyGoal[$user_id] ?? 0;
+        }
         return [
             'class' => $class,
-            'students' => $students
+            'students' => $students,
+            'count' => $countWeeklyGoal,
         ];
     }
+
 
 
     public function create(array $data)

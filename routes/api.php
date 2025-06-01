@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\{
     WeeklyController,
     SelfStudyPlanController,
     ImageController,
-    SemesterGoalController
+    SemesterGoalController,
     RequestHelpController,
     HelpRequestController,
     NotifyController,
@@ -58,7 +58,6 @@ Route::get('/hello', function () {
 
 //Route::get('/users/{role}', [UserController::class, 'getByRole']); // ko sua
 //Route::post('/users/new', [UserController::class, 'store']); // "/users -> /users/new"
-
 //Route::get('/class', [ClassController::class, 'getAll']); // ko sua
 //Route::get('/class/current-semester/{id}', [ClassController::class, 'getLastestSemester']); // "/class/lastest-semester/{id} -> /class/current-semester/{id}"
 //Route::get('/class/{id}', [ClassController::class, 'getClassInfor']); // "/students/{id}/class-info -> /class/{id}"
@@ -80,13 +79,14 @@ Route::get('/users/{role}/paginate', [UserController::class, 'getPaginatedByRole
 
 
 Route::get('/class', [ClassController::class, 'getAll']);
-Route::get('/class/{id}', [ClassController::class, 'getClassById']);
+Route::get('/class/{id}/students', [ClassController::class, 'getStudentInClass']);
 Route::get('/class/lastest-semester/{id}', [ClassController::class, 'getLastestSemester']);
 Route::get('/students/{id}/class-info', [ClassController::class, 'getClassInfor']);
 
 //Route::get('/classplan', [ClassController::class, 'index']);
 Route::post('/classplan', [ClassController::class, 'storeClassPlan']);
 Route::get('/weekly-goals/{user_id}/{semester_id}', [WeeklyController::class, 'getWeeklyById']);
+Route::get('/weekly-info/{user_id}/', [WeeklyController::class, 'getWeeklyName']);
 Route::get('/weekly/class-plan', [WeeklyController::class, 'getClassPlan']);
 Route::get('/weekly/self-plan', [SelfStudyPlanController::class, 'index']);
 Route::get('self-study-plans/week/{weekTrackId}', [SelfStudyPlanController::class, 'getByWeekTrack']);
@@ -116,7 +116,7 @@ Route::middleware('auth:api')->group(function () {
 */
 Route::middleware(CheckAdmin::class)->group(function () {
    // Route::post('/create/class', [ClassController::class, 'create']); // "/class -> /create"
-   // Route::post('/class/{id}/students', [ClassController::class, 'addStudentToClass']); // da them 
+   // Route::post('/class/{id}/students', [ClassController::class, 'addStudentToClass']); // da them
 
    // Route::post('/semesters/{id}/subject', [SubjectController::class, 'storeBySemester']); // da them
     Route::post('/class', [ClassController::class, 'create']);
@@ -135,9 +135,9 @@ Route::post('/weekly-tracking', [WeeklyController::class, 'createWeeklyTracking'
 //Route::post('/week/goal', [WeeklyController::class, 'createWeeklyGoal']); // "/weekly-goal -> /week/goal"
 //Route::put('/week/goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']); // "/weely-goal/{id} -> /week/goal/{id}"
 
-//Route::get('/images', [ImageController::class, 'index']);
-//Route::post('/images', [ImageController::class, 'store']); 
-//Route::delete('/images/{id}', [ImageController::class, 'destroy']);
+Route::get('/images', [ImageController::class, 'index']);
+Route::post('/images', [ImageController::class, 'store']);
+Route::delete('/images/{id}', [ImageController::class, 'destroy']);
 Route::post('/weekly-goal', [WeeklyController::class, 'createWeeklyGoal']);
 Route::put('/weekly-goal/{id}', [WeeklyController::class, 'updateWeeklyGoalStatus']);
 Route::get('/requesthelp',[RequestHelpController::class,'getRequest']);

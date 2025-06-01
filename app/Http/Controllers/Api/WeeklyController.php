@@ -14,6 +14,10 @@ class WeeklyController extends Controller
     {
         $this->weeklyService = $weeklyService;
     }
+    public function getWeeklyName(int $user_id){
+        $result = $this->weeklyService->getWeeklyName($user_id);
+        return response()->json($result);
+    }
     public function create(Request $request): JsonResponse{
         $result = $this->weeklyService->create($request->all());
         return response()->json($result);
@@ -64,7 +68,7 @@ class WeeklyController extends Controller
 
     public function getClassPlan(Request $request)
     {
-        $user_id = $request->input('user_id');
+        $user_id = (int)$request->input('user_id');
         $week_track_id = $request->input('week_track_id');
 
         if (!$user_id || !$week_track_id) {

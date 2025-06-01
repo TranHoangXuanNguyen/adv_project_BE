@@ -9,5 +9,5 @@ interface IWeeklyRepository
     public function getClassPlan(int $id,int $week_track_id);
     public function getSelfPlan(int $id,int $semesters_id,int $week_track_id);
     public function updateWeeklyGoalStatus(int $id);
-
+    public function getWeeklyName(int $user_id);
 }

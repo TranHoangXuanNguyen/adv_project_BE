@@ -8,5 +8,5 @@ Schedule::call(function () {
         'message' => 'Request tự động từ Laravel!'
     ]);
     \Log::info('Task ran with response: ' . $response->body());
-})->dailyAt('09:38');
+})->dailyAt('22:05');
 

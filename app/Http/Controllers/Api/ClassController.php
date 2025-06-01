@@ -84,7 +84,7 @@ public function getLastestSemester(int $classId): JsonResponse
         ]);
     }
 
-    public function getClassById(int $classId): \Illuminate\Http\JsonResponse
+    public function getStudentInClass(int $classId): \Illuminate\Http\JsonResponse
     {
         try {
             $data = $this->classService->getClassById($classId);

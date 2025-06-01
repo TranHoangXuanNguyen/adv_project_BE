@@ -107,4 +107,10 @@ class WeeklyRepository implements IWeeklyRepository
         return response()->json(['message' => 'Status updated', 'status' => $goal->status]);
     }
 
+    public function getWeeklyName(int $user_id)
+    {
+        $data = $this->weeklymodel->where('user_id', $user_id)->get();
+        return $data;
+    }
+
 }

@@ -30,10 +30,9 @@ class ManagerRepository implements IManagerRepository
         try {
             $startDate = Carbon::parse($semester->start_date);
             $currentDate = Carbon::now('Asia/Ho_Chi_Minh');
-            $weeks = $startDate->diffInDays($currentDate) / 7; // Calculate precise weeks (decimal)
+            $weeks = $startDate->diffInDays($currentDate) / 7;
 
-            // Apply rounding logic: > 3.3 -> 4, <= 3.3 -> 3
-            $roundedWeeks = $weeks > 3.3 ? 4 : 3;
+            $roundedWeeks = round($weeks);
 
             \Log::info("Weeks calculated for class_id $classId: $weeks (rounded to $roundedWeeks) from $startDate to $currentDate");
             \Log::info('countWeekByClass took ' . (microtime(true) - $start) . ' seconds');

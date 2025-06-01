@@ -4,21 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Image;
+use App\Models\Achievement;
 class ImageController extends Controller
 {
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'url' => 'required|url|max:2048',
+            'user_id' => 'required',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'img' => 'required|url|max:2048',
         ]);
 
         try {
-            $image = Image::create($request->only(['name', 'url']));
+            $achievement = Achievement::create($request->only(['user_id' ,'title','description', 'img']));
             return response()->json([
                 'message' => 'Image saved successfully',
-                'data' => $image
+                'data' => $achievement
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -34,13 +36,13 @@ class ImageController extends Controller
             $perPage = $request->query('per_page', 10);
             $page = $request->query('page', 1);
 
-            $images = Image::query()
+            $achievements = Achievement::query()
                 ->orderBy('created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
 
             return response()->json([
                 'message' => 'Images retrieved successfully',
-                'data' => $images
+                'data' => $achievements
             ]);
 
         } catch (\Exception $e) {
@@ -53,10 +55,8 @@ class ImageController extends Controller
     public function destroy($id)
     {
         try {
-            $image = Image::findOrFail($id);
-
-            $image->delete();
-
+            $achievement = Achievement::findOrFail($id);
+            $achievement->delete();
             return response()->json([
                 'message' => 'Image deleted successfully'
             ], 200);
