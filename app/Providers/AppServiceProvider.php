@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\Api\WeeklyController;
 use App\Repositories\Eloquent\AuthRepository;
 use App\Repositories\Eloquent\ClassPlanRepository;
+use App\Repositories\Eloquent\RequestHelpRepository;
 use App\Repositories\Eloquent\SelfPlanRepository;
 use App\Repositories\Eloquent\SemesterGoalRepository;
 use App\Repositories\Eloquent\UserRepository;
